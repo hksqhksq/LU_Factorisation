@@ -175,4 +175,5 @@ if __name__ == "__main__":
     plt.legend()
     plt.grid(True, linestyle='--', alpha=0.5)
     plt.tight_layout()
-    plt.show()
+    plt.savefig('runtimes.png')
+    print("Plot saved as runtimes.png")
