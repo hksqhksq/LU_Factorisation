@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.sparse import diags
-
+import time
+import matplotlib.pyplot as plt
 
 def generate_safe_system(n):
     """
@@ -101,6 +102,30 @@ def determinant(A):
 
     return det_L * det_U
 
+def system_size(A, b):
+    if A.ndim != 2:
+        raise ValueError(f"Matrix A must be 2D, but got {A.ndim}D array")
+    n, m = A.shape
+    if n != m:
+        raise ValueError(f"Matrix A must be square, but got A.shape={A.shape}")
+    if b.shape[0] != n:
+        raise ValueError(f"System shapes are not compatible: A.shape={A.shape}, b.shape={b.shape}")
+    return n
+
+def row_add(A, b, p, k, q):
+    n = system_size(A, b)
+    for j in range(n):
+        A[p, j] = A[p, j] + k * A[q, j]
+    b[p, 0] = b[p, 0] + k * b[q, 0]
+
+def gaussian_elimination(A, b):
+    n = system_size(A, b)
+    for i in range(n - 1):
+        for j in range(i + 1, n):
+            factor = A[j, i] / A[i, i]
+            row_add(A, b, j, -factor, i)
+
+
 if __name__ == "__main__":
     # --- Test 1: LU factorisation on a known matrix ---
     A_test = np.array([[2., 1., 1.],
@@ -126,3 +151,28 @@ if __name__ == "__main__":
     print(f"determinant(A_large) = {det:.6f}")
     print(f"Expected (n+1 = 101): {101.0:.6f}")
     print(f"Correct: {np.isclose(det, 101.0)}")
+
+    sizes = [5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+lu_times, ge_times = [], []
+
+for n in sizes:
+    A, b, _ = generate_safe_system(n)
+
+    t0 = time.perf_counter()
+    lu_factorisation(A.copy())
+    lu_times.append(time.perf_counter() - t0)
+
+    t0 = time.perf_counter()
+    gaussian_elimination(A.copy(), b.copy())
+    ge_times.append(time.perf_counter() - t0)
+
+    plt.figure(figsize=(8, 5))
+    plt.plot(sizes, lu_times, 'o-', color='steelblue', label='LU Factorisation (my code)', linewidth=2, markersize=5)
+    plt.plot(sizes, ge_times, 's--', color='tomato', label='Gaussian Elimination (notes)', linewidth=2, markersize=5)
+    plt.xlabel('Matrix size $n$')
+    plt.ylabel('Run time (seconds)')
+    plt.title('Run time: LU Factorisation vs Gaussian Elimination')
+    plt.legend()
+    plt.grid(True, linestyle='--', alpha=0.5)
+    plt.tight_layout()
+    plt.show()
