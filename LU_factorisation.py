@@ -100,3 +100,29 @@ def determinant(A):
         det_U *= U[i, i]
 
     return det_L * det_U
+
+if __name__ == "__main__":
+    # --- Test 1: LU factorisation on a known matrix ---
+    A_test = np.array([[2., 1., 1.],
+                       [4., 3., 3.],
+                       [8., 7., 9.]])
+
+    L, U = lu_factorisation(A_test)
+    print("=== Test 1: LU Factorisation ===")
+    print("L =\n", L)
+    print("U =\n", U)
+    print("L @ U == A:", np.allclose(L @ U, A_test))
+
+    # --- Test 2: L is lower triangular with unit diagonal ---
+    print("\n=== Test 2: Structure checks ===")
+    print("L is lower triangular:", np.allclose(L, np.tril(L)))
+    print("U is upper triangular:", np.allclose(U, np.triu(U)))
+    print("L has unit diagonal:  ", np.allclose(np.diag(L), 1.0))
+
+    # --- Test 3: Determinant on A_large (n=100) ---
+    print("\n=== Test 3: Determinant of A_large ===")
+    A_large, b_large, x_large = generate_safe_system(100)
+    det = determinant(A_large)
+    print(f"determinant(A_large) = {det:.6f}")
+    print(f"Expected (n+1 = 101): {101.0:.6f}")
+    print(f"Correct: {np.isclose(det, 101.0)}")
