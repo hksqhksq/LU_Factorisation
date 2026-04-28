@@ -153,26 +153,26 @@ if __name__ == "__main__":
     print(f"Correct: {np.isclose(det, 101.0)}")
 
     sizes = [5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-lu_times, ge_times = [], []
+    lu_times, ge_times = [], []
 
-for n in sizes:
-    A, b, _ = generate_safe_system(n)
+    for n in sizes:
+        A, b, _ = generate_safe_system(n)
 
-    t0 = time.perf_counter()
-    lu_factorisation(A.copy())
-    lu_times.append(time.perf_counter() - t0)
+        t0 = time.perf_counter()
+        lu_factorisation(A.copy())
+        lu_times.append(time.perf_counter() - t0)
 
-    t0 = time.perf_counter()
-    gaussian_elimination(A.copy(), b.copy())
-    ge_times.append(time.perf_counter() - t0)
+        t0 = time.perf_counter()
+        gaussian_elimination(A.copy(), b.copy())
+        ge_times.append(time.perf_counter() - t0)
 
-    plt.figure(figsize=(8, 5))
-    plt.plot(sizes, lu_times, 'o-', color='steelblue', label='LU Factorisation (my code)', linewidth=2, markersize=5)
-    plt.plot(sizes, ge_times, 's--', color='tomato', label='Gaussian Elimination (notes)', linewidth=2, markersize=5)
-    plt.xlabel('Matrix size $n$')
-    plt.ylabel('Run time (seconds)')
-    plt.title('Run time: LU Factorisation vs Gaussian Elimination')
-    plt.legend()
-    plt.grid(True, linestyle='--', alpha=0.5)
-    plt.tight_layout()
-    plt.show()
+        plt.figure(figsize=(8, 5))
+        plt.plot(sizes, lu_times, 'o-', color='steelblue', label='LU Factorisation (my code)', linewidth=2, markersize=5)
+        plt.plot(sizes, ge_times, 's--', color='tomato', label='Gaussian Elimination (notes)', linewidth=2, markersize=5)
+        plt.xlabel('Matrix size $n$')
+        plt.ylabel('Run time (seconds)')
+        plt.title('Run time: LU Factorisation vs Gaussian Elimination')
+        plt.legend()
+        plt.grid(True, linestyle='--', alpha=0.5)
+        plt.tight_layout()
+        plt.show()
