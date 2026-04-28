@@ -87,3 +87,16 @@ def lu_factorisation(A):
             L[i, j] = (A[i, j] - sum_val) / U[j, j]
     
     return L, U
+
+def determinant(A):
+    n = A.shape[0]
+    L, U = lu_factorisation(A)
+
+    det_L = 1.0
+    det_U = 1.0
+
+    for i in range(n):
+        det_L *= L[i, i]
+        det_U *= U[i, i]
+
+    return det_L * det_U
