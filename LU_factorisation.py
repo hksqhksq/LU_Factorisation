@@ -168,7 +168,7 @@ if __name__ == "__main__":
 
     plt.figure(figsize=(8, 5))
     plt.plot(sizes, lu_times, 'o-', color='steelblue', label='LU Factorisation (my code)', linewidth=2, markersize=5)
-    plt.plot(sizes, ge_times, 's--', color='tomato', label='Gaussian Elimination (notes)', linewidth=2, markersize=5)
+    plt.plot(sizes, ge_times, 's--', color='tomato', label='Gaussian Elimination (from notes)', linewidth=2, markersize=5)
     plt.xlabel('Matrix size $n$')
     plt.ylabel('Run time (seconds)')
     plt.title('Run time: LU Factorisation vs Gaussian Elimination')
