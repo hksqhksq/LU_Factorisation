@@ -1,3 +1,6 @@
+import numpy as np
+from scipy.sparse import diags
+
 def lu_factorisation(A):
     """
     Compute the LU factorisation of a square matrix A.
