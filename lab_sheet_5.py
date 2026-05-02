@@ -42,11 +42,11 @@ def gram_schmidt_qr(A):
 
     return Q, R
 
-epsilons = [10**(-k) for k in range(6, 17)]
+epsilons = [10**(-k) for k in range(6, 17)] # 10^k
 
 print("eps", "error1", "error2", "error3")
 for eps in epsilons:
-    A = A_eps = np.array([[1, 1+eps], [1+eps, 1]], dtype=float) # your code here
+    A = A_eps = np.array([[1, 1+eps], [1+eps, 1]], dtype=float) # data type = float
     Q, R = gram_schmidt_qr(A)
 
     error1 = np.linalg.norm(A - Q @ R, 2)
