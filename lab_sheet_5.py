@@ -1,7 +1,5 @@
 import numpy as np
 from scipy.sparse import diags
-import time
-import matplotlib.pyplot as plt
 
 def gram_schmidt_qr(A):
     """
@@ -44,27 +42,9 @@ def gram_schmidt_qr(A):
 
     return Q, R
 
-
-
-#eps = 1e-6
-#A = A_eps = np.array([[1, 1+eps], [1+eps, 1]], dtype=float) # your code here
-#print(A)
-
-#Q, R = gram_schmidt_qr(A)
-#print("Q =", Q)
-#print("R =", R)
-
-#error1 = np.linalg.norm(A - Q @ R, 2)
-#error2 = np.linalg.norm(Q.T @ Q - np.eye(2), 2)
-#error3 = np.linalg.norm(R - np.triu(R), 2)
-
-#print("error1 = ", error1)
-#print("error2 = ", error2)
-#print("error3 = ", error3)
-
 epsilons = [10**(-k) for k in range(6, 17)]
 
-print(f"{'eps':<12} {'error1':<20} {'error2':<20} {'error3':<20}")
+print("eps", "error1", "error2", "error3")
 for eps in epsilons:
     A = A_eps = np.array([[1, 1+eps], [1+eps, 1]], dtype=float) # your code here
     Q, R = gram_schmidt_qr(A)
@@ -73,7 +53,7 @@ for eps in epsilons:
     error2 = np.linalg.norm(Q.T @ Q - np.eye(2), 2)
     error3 = np.linalg.norm(R - np.triu(R), 2)
 
-    print(f"{eps:<12.2e} {error1:<20.6e} {error2:<20.6e} {error3:<20.6e}")
+    print(eps, error1, error2, error3)
 
 print(A)
 print("Q =", Q)
