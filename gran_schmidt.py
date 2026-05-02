@@ -49,3 +49,7 @@ def gram_schmidt_qr(A):
 eps = 1e-6
 A = A_eps = [[1, 1+eps], [1+eps, 1]] # your code here
 print(A)
+
+Q, R = gram_schmidt_qr(A)
+print("Q =", Q)
+print("R =", R)
